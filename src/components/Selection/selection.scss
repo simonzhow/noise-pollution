@@ -1,0 +1,16 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto+Mono');
+
+.overlay-map-control {
+  font-family: 'Roboto Mono';
+  color: white;
+
+  .title-label {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+
+  .selection {
+    font-size: 14px;
+  }
+}

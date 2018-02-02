@@ -1,0 +1,17 @@
+.parties-map {
+  width: 100vw;
+  height: 100vh;
+}
+
+.selection-container {
+	position: absolute;
+	top: 0;
+  margin-top: 50px;
+  margin-left: 20px;
+	padding-bottom: 10px;
+	padding-left: 10px;
+	padding-top: 10px;
+	z-index: 99;
+	width: 300px;
+	background-color: rgba(0,0,0, 0.2);
+}
