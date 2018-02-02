@@ -1,7 +1,4 @@
-.parties-map {
-  width: 100vw;
-  height: 100vh;
-}
+@import '../../scss/Variables';
 
 .selection-container {
 	position: absolute;
@@ -11,7 +8,7 @@
 	padding-bottom: 10px;
 	padding-left: 10px;
 	padding-top: 10px;
-	z-index: 99;
+	z-index: $z-selection-container;
 	width: 300px;
-	background-color: rgba(0,0,0, 0.2);
+	background-color: $color-transparent
 }

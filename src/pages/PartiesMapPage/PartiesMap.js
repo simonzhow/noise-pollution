@@ -23,12 +23,13 @@ export default class PartiesMap extends Component {
     this.handleResize = this.handleResize.bind(this)
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.handleResize()
     window.addEventListener('resize', this.handleResize)
   }
 
   componentWillUnmount() {
+    // if component not in the DOM, we do not need a resize handler
     window.removeEventListener('resize', this.handleResize)
   }
 
