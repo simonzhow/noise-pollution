@@ -1,6 +1,6 @@
 # Summer Internship Project - Simon
 
-[TEMPLATE] A web-app that encourages travel through an interactive travel history map and competition with friends. Built with :heart: for UCLA CS 130: Software Engineering.
+Utilizes Citywide Payroll Data for New York City (2014, 2015, 2016, and 2017 fiscal years) to show the payouts from different regions within New York. 
 
 ## Requisites For Running This Application
 1. Ensure Node is installed (running `node -v` on command line should return version >=6.0)
