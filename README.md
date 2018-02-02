@@ -1,6 +1,10 @@
 # Summer Internship Project - Simon
 
-Utilizes Citywide Payroll Data for New York City (2014, 2015, 2016, and 2017 fiscal years) to show the payouts from different regions within New York. 
+Utilizes citywide New York police data to show the number of noise complaints in various regions within the greater New York area.
+
+## Description
+
+Uses Mapbox, Deck.GL, and React
 
 ## Requisites For Running This Application
 1. Ensure Node is installed (running `node -v` on command line should return version >=6.0)
