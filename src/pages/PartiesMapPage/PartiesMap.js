@@ -1,40 +1,59 @@
 import React, { Component } from 'react'
 import MapGL from 'react-map-gl'
+import BarsOverlay from '../../overlays/bars-hexagon-overlay.js'
 import Selection from '../../components/Selection'
 import HomeButton from '../../components/Button'
 import 'mapbox-gl/dist/mapbox-gl.css'
-import { MAPBOX_TOKEN } from '../../constants' // , MapMode, BARS_DATA, PARTIES_DATA
+import { MAPBOX_TOKEN, BARS_DATA } from '../../constants' // , MapMode, BARS_DATA, PARTIES_DATA
 
-
+import Papa from 'papaparse'
 import './PartiesMap.scss'
 
-const DEFAULT_LONGITUDE = -73.985130
-const DEFAULT_LATITUDE = 40.718896
+const DEFAULT_VIEWPORT = {
+  width: window.innerWidth,
+  height: window.innerHeight,
+  longitude: -73.985130,
+  latitude: 40.718896,
+  zoom: 12,
+  minZoom: 5,
+  maxZoom: 15,
+  pitch: 30.5,
+  bearing: -5.396674584323023
+}
+
 
 export default class PartiesMap extends Component {
   constructor() {
     super()
     this.state = {
-      viewport: {
-        width: 400,
-        height: 400,
-        longitude: DEFAULT_LONGITUDE,
-        latitude: DEFAULT_LATITUDE,
-        zoom: 12,
-        minZoom: 5,
-        maxZoom: 15,
-        pitch: 30.5,
-        bearing: -5.396674584323023
-      }
+      viewport: DEFAULT_VIEWPORT,
+      barsData: null
     }
 
     this.handleResize = this.handleResize.bind(this)
-    this.homeButtonPressed = this.homeButtonPressed.bind(this)
+    this.updateBars = this.updateBars.bind(this)
+
+    // load in bars data
+    Papa.parse(BARS_DATA, {
+      download: true,
+      header: true,
+      delimiter: ',',
+      dynamicTyping: true,
+      complete: this.updateBars
+    })
+  }
+
+  updateBars(results) {
+    const barsData = results.data.map(item => {
+      return [item.Longitude, item.Latitude]
+    })
+
+    this.setState ({ barsData: barsData })
   }
 
   componentDidMount() {
-    this.handleResize()
     window.addEventListener('resize', this.handleResize)
+    this.handleResize() // this will ensure that viewport adjusts to right size when mounted onto the DOM
   }
 
   componentWillUnmount() {
@@ -43,23 +62,15 @@ export default class PartiesMap extends Component {
   }
 
   handleResize() {
-    const newViewport = this.state.viewport
-    newViewport.width = window.innerWidth
-    newViewport.height = window.innerHeight
-    this.setState({ viewport: newViewport })
+    this.setState({
+      viewport: DEFAULT_VIEWPORT
+    })
   }
-
-  homeButtonPressed() {
-    console.log('clicked!')
-    // const currViewport = this.state.viewport
-    // currViewport.longitude = DEFAULT_LONGITUDE
-    // currViewport.latitude = DEFAULT_LATITUDE
-    // this.setState({ viewport: currViewport })
-  }
-
 
   renderMap() {
-    const { viewport } = this.state
+
+    // trivial case to render the bars
+    const { viewport, barsData } = this.state
 
     return (
       <MapGL
@@ -67,12 +78,13 @@ export default class PartiesMap extends Component {
         onViewportChange={(viewport) => this.setState({viewport})}
         mapStyle='mapbox://styles/mapbox/dark-v9'
         mapboxApiAccessToken={ MAPBOX_TOKEN }
-      />
+      >
+        <BarsOverlay viewport={ viewport } data={ barsData || [] } />
+      </MapGL>
     )
   }
 
   render() {
-
     // const {
     //   viewport,
     //   data
@@ -85,11 +97,8 @@ export default class PartiesMap extends Component {
           <Selection />
         </div>
         <div className="home-button-container">
-          <HomeButton home={this.homeButtonPressed}/>
+          <HomeButton home={this.handleResize}/>
         </div>
-        {/* <div className="overlay-container">
-          <BarsOverlay viewport={ viewport } data={ data || [] } />
-        </div> */}
       </div>
     )
   }

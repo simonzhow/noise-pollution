@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import DeckGL from 'deck.gl'
 import { HexagonLayer } from 'deck.gl'
 
@@ -22,14 +22,6 @@ const colorRange = [
   [209, 55, 78]
 ]
 
-
-
-const defaultProps = {
-  radius: 1000,
-  upperPercentile: 100,
-  coverage: 1
-}
-
 export default class BarsOverlay extends Component {
 
   constructor(props) {
@@ -45,7 +37,7 @@ export default class BarsOverlay extends Component {
   }
 
   componentDidMount() {
-  this.animate();
+  this.animate()
 }
 
   componentWillReceiveProps(nextProps) {
@@ -55,30 +47,30 @@ export default class BarsOverlay extends Component {
   }
 
   componentWillUnmount() {
-    this.stopAnimate();
+    this.stopAnimate()
   }
 
   animate() {
-    this.stopAnimate();
+    this.stopAnimate()
 
     // wait 1.5 secs to start animation so that all data are loaded
-    this.startAnimationTimer = window.setTimeout(this.startAnimate, 1500);
+    this.startAnimationTimer = window.setTimeout(this.startAnimate, 1500)
   }
 
   startAnimate() {
-    this.intervalTimer = window.setInterval(this.animateHeight, 20);
+    this.intervalTimer = window.setInterval(this.animateHeight, 20)
   }
 
   stopAnimate() {
-    window.clearTimeout(this.startAnimationTimer);
-    window.clearTimeout(this.intervalTimer);
+    window.clearTimeout(this.startAnimationTimer)
+    window.clearTimeout(this.intervalTimer)
   }
 
   animateHeight() {
     if (this.state.elevationScale === elevationScale.max) {
       this.stopAnimate();
     } else {
-      this.setState({elevationScale: this.state.elevationScale + 1});
+      this.setState({elevationScale: this.state.elevationScale + 1})
     }
   }
 
@@ -86,7 +78,7 @@ export default class BarsOverlay extends Component {
     const {viewport, data, radius, coverage, upperPercentile} = this.props;
 
     if (!data) {
-      return null;
+      return null
     }
 
     const layers = [
@@ -106,7 +98,7 @@ export default class BarsOverlay extends Component {
         radius,
         upperPercentile
       })
-    ];
+    ]
 
     return <DeckGL {...viewport} layers={layers} />;
   }
