@@ -1,0 +1,13 @@
+@import '../../scss/Variables';
+
+.home-button {
+  color: white;
+  border: 1px solid white;
+  padding: 5px;
+  transition: all .2s ease-in-out;
+}
+
+.home-button:hover {
+  -webkit-transform:scale(1.2); /* or some other value */
+  transform:scale(1.2);
+}

@@ -5,12 +5,18 @@
   color: $color-cream;
 
   .title-label {
-    font-size: $font-size-small;
+    font-size: $font-size-medium;
     font-weight: $font-style-heading;
     margin-bottom: 20px;
   }
 
   .selection {
+    font-size: $font-size-small;
+  }
+
+  .notice {
+    margin-top: 20px;
     font-size: $font-size-tiny;
+    font-style: italic;
   }
 }
