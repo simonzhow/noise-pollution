@@ -62,7 +62,7 @@ export default class BarsOverlay extends Component {
 
   render() {
     return (
-      this.props.mode ? this.render2DModel() : this.render3DModel()
+      this.props.mode ? this.render3DModel() : this.render2DModel()
     )
   }
 }
