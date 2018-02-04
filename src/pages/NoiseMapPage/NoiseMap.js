@@ -7,7 +7,7 @@ import 'mapbox-gl/dist/mapbox-gl.css'
 import { MAPBOX_TOKEN, BARS_DATA } from '../../constants' // , MapMode, BARS_DATA, PARTIES_DATA
 
 import Papa from 'papaparse'
-import './PartiesMap.scss'
+import './NoiseMap.scss'
 
 const DEFAULT_VIEWPORT = {
   width: window.innerWidth,
@@ -22,7 +22,7 @@ const DEFAULT_VIEWPORT = {
 }
 
 
-export default class PartiesMap extends Component {
+export default class NoiseMap extends Component {
   constructor() {
     super()
     this.state = {
