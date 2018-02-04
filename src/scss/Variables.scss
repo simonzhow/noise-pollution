@@ -1,0 +1,38 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto+Mono');
+
+// Colors
+$color-royal-blue: rgb(43, 50, 137);
+$color-mint: rgb(206, 233, 224);
+$color-red: rgb(238, 70, 47);
+$color-cream: rgb(255, 250, 243);
+$color-black: rgb(23, 24, 25);
+$color-transparent: rgba(0,0,0, 0.4);
+
+// Typography
+$font-family: 'Roboto Mono';
+$font-style-heading: bold;
+$font-style-body: normal;
+$font-size-tiny: 10px;
+$font-size-small: 13px;
+$font-size-medium: 15px;
+$font-size-large: 37px;
+$font-size-huge: 50px;
+$line-height-low: 1.20;
+$line-height-normal: 1.37;
+$line-height-high: 1.75;
+
+// Media Breakpoints
+$breakpoint-small: 600px;
+$breakpoint-medium: 800px;
+$breakpoint-large: 1000px;
+
+// Component Sizes
+$box-shadow: 0 3px 4px 0 rgba(0,0,0,.14), 0 3px 3px -2px rgba(0,0,0,.2), 0 1px 8px 0 rgba(0,0,0,.12);
+
+// Z-Indexes
+$z-selection-container: 99;
+$z-navpanel: 5100;
+$z-hamburger: 5200;
+
+$z-hero-floating-shapes: 4000;
+$z-hero-text-overlay: 4100;

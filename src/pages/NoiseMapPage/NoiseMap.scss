@@ -1,0 +1,32 @@
+@import '../../scss/Variables';
+
+.selection-container {
+	position: absolute;
+	top: 0;
+  margin-top: 50px;
+  margin-left: 20px;
+	padding-bottom: 10px;
+	padding-left: 10px;
+	padding-top: 10px;
+	z-index: $z-selection-container;
+	width: 300px;
+	background-color: $color-transparent
+}
+
+.home-button-container {
+	position: absolute;
+	top: 0;
+	right: 0;
+	margin-top: 50px;
+	margin-right: 20px;
+	z-index: $z-selection-container;
+}
+
+.toggle-switch-container {
+	position: absolute;
+	top: 0;
+	right: 0;
+	margin-top: 125px;
+	margin-right: 20px;
+	z-index: $z-selection-container;
+}

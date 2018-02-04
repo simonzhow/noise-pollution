@@ -1,7 +1,9 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import PartiesMap from './pages/PartiesMapPage/PartiesMap.js'
+import NoiseMap from './pages/NoiseMapPage/NoiseMap.js'
 import registerServiceWorker from './registerServiceWorker'
 
-ReactDOM.render(<PartiesMap />, document.getElementById('root'))
+import './scss/General.scss'
+
+ReactDOM.render(<NoiseMap />, document.getElementById('root'))
 registerServiceWorker()
