@@ -18,7 +18,7 @@ const DEFAULT_VIEWPORT = {
   minZoom: 5,
   maxZoom: 15,
   pitch: 30.5,
-  bearing: -5.396674584323023
+  bearing: -10.396674584323023
 }
 
 
@@ -27,11 +27,16 @@ export default class PartiesMap extends Component {
     super()
     this.state = {
       viewport: DEFAULT_VIEWPORT,
-      barsData: null
+      bars: {
+        barsData: null,
+        numCalls: null
+      }
+
     }
 
     this.handleResize = this.handleResize.bind(this)
     this.updateBars = this.updateBars.bind(this)
+    this.homeButtonPressed = this.homeButtonPressed.bind(this)
 
     // load in bars data
     Papa.parse(BARS_DATA, {
@@ -41,14 +46,32 @@ export default class PartiesMap extends Component {
       dynamicTyping: true,
       complete: this.updateBars
     })
+
+    // load in party data
+
+    /* TODO:
+    1. make options for both bars and party
+    2. allow user to choose between 2D and 3D viewing
+    3. hamburger menu for extra information?
+    4. add hovering functionality
+    */
   }
 
   updateBars(results) {
-    const barsData = results.data.map(item => {
-      return [item.Longitude, item.Latitude]
+    const barsData = results.data.map(entry => {
+      return {position: [entry.Longitude, entry.Latitude]}
     })
 
-    this.setState ({ barsData: barsData })
+    const numCalls = results.data.map(entry => {
+      return [entry.num_calls]
+    })
+
+    const barsEntry = {
+      barsData: barsData,
+      numCalls: numCalls
+    }
+
+    this.setState({ bars: barsEntry })
   }
 
   componentDidMount() {
@@ -67,10 +90,17 @@ export default class PartiesMap extends Component {
     })
   }
 
+  homeButtonPressed() {
+    const homeViewport = this.state.viewport
+    homeViewport.longitude = DEFAULT_VIEWPORT.longitude
+    homeViewport.latitude = DEFAULT_VIEWPORT.latitude
+    this.setState({ viewport: homeViewport })
+  }
+
   renderMap() {
 
     // trivial case to render the bars
-    const { viewport, barsData } = this.state
+    const { viewport, bars } = this.state
 
     return (
       <MapGL
@@ -79,17 +109,12 @@ export default class PartiesMap extends Component {
         mapStyle='mapbox://styles/mapbox/dark-v9'
         mapboxApiAccessToken={ MAPBOX_TOKEN }
       >
-        <BarsOverlay viewport={ viewport } data={ barsData || [] } />
+        <BarsOverlay viewport={ viewport } data={ bars.barsData || [] } />
       </MapGL>
     )
   }
 
   render() {
-    // const {
-    //   viewport,
-    //   data
-    // } = this.state
-
     return (
       <div className="parties-map">
         { this.renderMap() }
@@ -97,7 +122,7 @@ export default class PartiesMap extends Component {
           <Selection />
         </div>
         <div className="home-button-container">
-          <HomeButton home={this.handleResize}/>
+          <HomeButton home={this.homeButtonPressed}/>
         </div>
       </div>
     )

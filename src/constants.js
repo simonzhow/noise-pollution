@@ -1,6 +1,6 @@
 export const MapMode = {
   NONE:             'NONE',
-  BARS:            'BARS',
+  BARS:            'CLUB/BARS/RESTAURANT',
   PARTIES:       'PARTIES',
 }
 
