@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
 import MapGL from 'react-map-gl'
-import BarsOverlay from '../../overlays/bars-hexagon-overlay.js'
+import BarsHexagonOverlay from '../../overlays/bars-hexagon-overlay.js'
+import ApartmentsHexagonOverlay from '../../overlays/apartments-hexagon-overlay.js'
 import Selection from '../../components/Selection'
 import HomeButton from '../../components/Button'
 import ToggleSwitch from '../../components/ToggleSwitch'
 import 'mapbox-gl/dist/mapbox-gl.css'
-import { MAPBOX_TOKEN, BARS_DATA } from '../../constants' // , MapMode, BARS_DATA, PARTIES_DATA
+import { MAPBOX_TOKEN, BARS_DATA, APARTMENTS_DATA } from '../../constants'
 
 import Papa from 'papaparse'
 import './NoiseMap.scss'
@@ -32,13 +33,21 @@ export default class NoiseMap extends Component {
         barsData: null,
         numCalls: null
       },
-      is3dMode: false
+      apartments: {
+        apartmentsData: null
+      },
+      is3dMode: false,
+      showBarsOverlay: false,
+      showApartmentsOverlay: false
     }
 
     this.handleResize = this.handleResize.bind(this)
     this.updateBars = this.updateBars.bind(this)
+    this.updateApartments = this.updateApartments.bind(this)
     this.homeButtonPressed = this.homeButtonPressed.bind(this)
     this.changeDimensionMode = this.changeDimensionMode.bind(this)
+    this.toggleBarsOverlay = this.toggleBarsOverlay.bind(this)
+    this.toggleApartmentsOverlay = this.toggleApartmentsOverlay.bind(this)
 
     // load in bars data
     Papa.parse(BARS_DATA, {
@@ -50,11 +59,19 @@ export default class NoiseMap extends Component {
     })
 
     // load in party data
+    Papa.parse(APARTMENTS_DATA, {
+      download: true,
+      header: true,
+      delimiter: ',',
+      dynamicTyping: true,
+      complete: this.updateApartments
+    })
 
     /* TODO:
-    1. make options for both bars and party
+    1. CSS show/hide instead of re rendering overlays
     3. hamburger menu for extra information?
     4. add hovering functionality
+    5. mobile friendly pls
     */
 
     // MUST RESET TOGGLE WHENEVER MODE IS SWITCHED
@@ -75,6 +92,18 @@ export default class NoiseMap extends Component {
     }
 
     this.setState({ bars: barsEntry })
+  }
+
+  updateApartments(results) {
+    const apartmentsData = results.data.map(entry => {
+      return {position: [entry.Longitude, entry.Latitude]}
+    })
+
+    const apartmentsEntry = {
+      apartmentsData: apartmentsData
+    }
+
+    this.setState({ apartments: apartmentsEntry })
   }
 
   componentDidMount() {
@@ -100,13 +129,31 @@ export default class NoiseMap extends Component {
     this.setState({ viewport: homeViewport })
   }
 
+  toggleBarsOverlay() {
+    this.setState({
+      showBarsOverlay: !this.state.showBarsOverlay,
+      showApartmentsOverlay: this.state.showApartmentsOverlay ? !this.state.showApartmentsOverlay : this.state.showApartmentsOverlay
+    })
+  }
+
+  toggleApartmentsOverlay() {
+    this.setState({
+      showApartmentsOverlay: !this.state.showApartmentsOverlay,
+      showBarsOverlay: this.state.showBarsOverlay ? !this.state.showBarsOverlay : this.state.showBarsOverlay
+    })
+  }
+
   changeDimensionMode() {
     this.setState({ is3dMode: !this.state.is3dMode })
   }
 
   renderMap() {
-    // trivial case to render the bars
-    const { viewport, bars, is3dMode } = this.state
+    const {
+      viewport,
+      bars,
+      apartments,
+      is3dMode
+    } = this.state
 
     return (
       <MapGL
@@ -115,21 +162,31 @@ export default class NoiseMap extends Component {
         mapStyle='mapbox://styles/mapbox/dark-v9'
         mapboxApiAccessToken={ MAPBOX_TOKEN }
       >
-        <BarsOverlay mode={is3dMode} viewport={ viewport } data={ bars.barsData || [] } />
+        {/*css show marker instead of rendering*/}
+        { this.state.showBarsOverlay && <BarsHexagonOverlay mode={is3dMode} viewport={ viewport } data={ bars.barsData || [] } /> }
+        { this.state.showApartmentsOverlay && <ApartmentsHexagonOverlay mode={is3dMode} viewport={ viewport } data={ apartments.apartmentsData || [] } /> }
       </MapGL>
     )
   }
 
   render() {
+
+    const {
+      showBarsOverlay,
+      showApartmentsOverlay
+    } = this.state
+
     return (
       <div className="parties-map">
         { this.renderMap() }
         <div className="selection-container">
-          <Selection />
+          <Selection checkedBars={showBarsOverlay} toggleBars={this.toggleBarsOverlay} checkedApartments={showApartmentsOverlay} toggleApartments={ this.toggleApartmentsOverlay }/>
         </div>
+
         <div className="toggle-switch-container">
-          <ToggleSwitch changeMode={this.changeDimensionMode}/>
+          { (showBarsOverlay || showApartmentsOverlay) && <ToggleSwitch changeMode={this.changeDimensionMode}/> }
         </div>
+
         <div className="home-button-container">
           <HomeButton home={this.homeButtonPressed}/>
         </div>

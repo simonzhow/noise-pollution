@@ -27,7 +27,7 @@ const LIGHT_SETTINGS = {
 
 // const elevationScale = {min: 1, max: 50}
 
-export default class BarsHexagonOverlay extends Component {
+export default class ApartmentsHexagonOverlay extends Component {
   render2DModel() {
     const { data, viewport } = this.props
 
@@ -35,8 +35,9 @@ export default class BarsHexagonOverlay extends Component {
       id: 'bars-hexagon-layer',
       extruded: false,
       lightSettings: LIGHT_SETTINGS,
+      colorDomain: [0, 50],
       data,
-      radius: 40
+      radius: 20
     })
 
     return (<DeckGL {...viewport} layers={[layer]} />)
@@ -51,9 +52,10 @@ export default class BarsHexagonOverlay extends Component {
       elevationScale: 1,
       extruded: true,
       lightSettings: LIGHT_SETTINGS,
+      colorDomain: [0, 50],
       // colorRange,
       data,
-      radius: 40
+      radius: 20
     })
 
     return (<DeckGL {...viewport} layers={[layer]} />)
