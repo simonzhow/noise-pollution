@@ -3,6 +3,7 @@ import MapGL from 'react-map-gl'
 import BarsOverlay from '../../overlays/bars-hexagon-overlay.js'
 import Selection from '../../components/Selection'
 import HomeButton from '../../components/Button'
+import ToggleSwitch from '../../components/ToggleSwitch'
 import 'mapbox-gl/dist/mapbox-gl.css'
 import { MAPBOX_TOKEN, BARS_DATA } from '../../constants' // , MapMode, BARS_DATA, PARTIES_DATA
 
@@ -30,13 +31,14 @@ export default class NoiseMap extends Component {
       bars: {
         barsData: null,
         numCalls: null
-      }
-
+      },
+      is3dMode: false
     }
 
     this.handleResize = this.handleResize.bind(this)
     this.updateBars = this.updateBars.bind(this)
     this.homeButtonPressed = this.homeButtonPressed.bind(this)
+    this.changeDimensionMode = this.changeDimensionMode.bind(this)
 
     // load in bars data
     Papa.parse(BARS_DATA, {
@@ -51,10 +53,11 @@ export default class NoiseMap extends Component {
 
     /* TODO:
     1. make options for both bars and party
-    2. allow user to choose between 2D and 3D viewing
     3. hamburger menu for extra information?
     4. add hovering functionality
     */
+
+    // MUST RESET TOGGLE WHENEVER MODE IS SWITCHED
   }
 
   updateBars(results) {
@@ -97,10 +100,13 @@ export default class NoiseMap extends Component {
     this.setState({ viewport: homeViewport })
   }
 
-  renderMap() {
+  changeDimensionMode() {
+    this.setState({ is3dMode: !this.state.is3dMode })
+  }
 
+  renderMap() {
     // trivial case to render the bars
-    const { viewport, bars } = this.state
+    const { viewport, bars, is3dMode } = this.state
 
     return (
       <MapGL
@@ -109,7 +115,7 @@ export default class NoiseMap extends Component {
         mapStyle='mapbox://styles/mapbox/dark-v9'
         mapboxApiAccessToken={ MAPBOX_TOKEN }
       >
-        <BarsOverlay viewport={ viewport } data={ bars.barsData || [] } />
+        <BarsOverlay mode={is3dMode} viewport={ viewport } data={ bars.barsData || [] } />
       </MapGL>
     )
   }
@@ -120,6 +126,9 @@ export default class NoiseMap extends Component {
         { this.renderMap() }
         <div className="selection-container">
           <Selection />
+        </div>
+        <div className="toggle-switch-container">
+          <ToggleSwitch changeMode={this.changeDimensionMode}/>
         </div>
         <div className="home-button-container">
           <HomeButton home={this.homeButtonPressed}/>

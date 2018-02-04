@@ -28,15 +28,21 @@ const LIGHT_SETTINGS = {
 // const elevationScale = {min: 1, max: 50}
 
 export default class BarsOverlay extends Component {
+  render2DModel() {
+    const { data, viewport } = this.props
 
-  // 3D or 2D (slider!!!!)
+    const layer = new HexagonLayer({
+      id: 'bars-hexagon-layer',
+      extruded: false,
+      lightSettings: LIGHT_SETTINGS,
+      data,
+      radius: 40
+    })
 
-  constructor(props) {
-    super(props)
+    return (<DeckGL {...viewport} layers={[layer]} />)
   }
 
-
-  render() {
+  render3DModel() {
     const { data, viewport } = this.props
 
     const layer = new HexagonLayer({
@@ -51,5 +57,12 @@ export default class BarsOverlay extends Component {
     })
 
     return (<DeckGL {...viewport} layers={[layer]} />)
+  }
+
+
+  render() {
+    return (
+      this.props.mode ? this.render2DModel() : this.render3DModel()
+    )
   }
 }
