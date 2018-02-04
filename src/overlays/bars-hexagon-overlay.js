@@ -16,9 +16,6 @@ const LIGHT_SETTINGS = {
 // play around with colors later
 // make manhattan more red
 
-
-
-
 // const colorRange = [
 //   [253,208,162],
 //   [253,208,162],
