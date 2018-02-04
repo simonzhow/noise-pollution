@@ -152,7 +152,7 @@ export default class NoiseMap extends Component {
       viewport,
       bars,
       apartments,
-      is3dMode
+      is3dMode,
     } = this.state
 
     return (
@@ -173,7 +173,8 @@ export default class NoiseMap extends Component {
 
     const {
       showBarsOverlay,
-      showApartmentsOverlay
+      showApartmentsOverlay,
+      is3dMode
     } = this.state
 
     return (
@@ -184,7 +185,7 @@ export default class NoiseMap extends Component {
         </div>
 
         <div className="toggle-switch-container">
-          { (showBarsOverlay || showApartmentsOverlay) && <ToggleSwitch changeMode={this.changeDimensionMode}/> }
+          { (showBarsOverlay || showApartmentsOverlay) && <ToggleSwitch mode={is3dMode} changeMode={this.changeDimensionMode}/> }
         </div>
 
         <div className="home-button-container">
