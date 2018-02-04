@@ -153,7 +153,13 @@ export default class NoiseMap extends Component {
       bars,
       apartments,
       is3dMode,
+      showBarsOverlay,
+      showApartmentsOverlay
     } = this.state
+
+    const inactiveStyle = {
+      visibility: 'hidden'
+    }
 
     return (
       <MapGL
@@ -162,9 +168,12 @@ export default class NoiseMap extends Component {
         mapStyle='mapbox://styles/mapbox/dark-v9'
         mapboxApiAccessToken={ MAPBOX_TOKEN }
       >
-        {/*css show marker instead of rendering*/}
-        { this.state.showBarsOverlay && <BarsHexagonOverlay mode={is3dMode} viewport={ viewport } data={ bars.barsData || [] } /> }
-        { this.state.showApartmentsOverlay && <ApartmentsHexagonOverlay mode={is3dMode} viewport={ viewport } data={ apartments.apartmentsData || [] } /> }
+        <div className="bars-overlay" style={!showBarsOverlay ? inactiveStyle : {}}>
+          <BarsHexagonOverlay mode={is3dMode} viewport={ viewport } data={ bars.barsData || [] } />
+        </div>
+        <div className="apartments-overlay" style={!showApartmentsOverlay ? inactiveStyle : {}}>
+          <ApartmentsHexagonOverlay mode={is3dMode} viewport={ viewport } data={ apartments.apartmentsData || [] } />
+        </div>
       </MapGL>
     )
   }
