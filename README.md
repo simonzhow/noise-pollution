@@ -1,5 +1,7 @@
 # Summer Internship Project - Simon
 
+![Screenshot](data-viz-ny.png)
+
 Utilizes citywide New York police data to show the number of noise complaints in various regions within the greater New York area.
 
 ## Description
