@@ -6,7 +6,7 @@ Utilizes citywide police data to show the number of noise complaints in various 
 
 ## Description
 
-In the "city that never sleeps", this web application visualizes the areas within New York that were the noisiest during the year 2016.
+In the "city that never sleeps", this web application visualizes the areas within New York City and its surrounding areas that were the noisiest during the year 2016.
 
 Uses Mapbox, Deck.GL, and React.
 
