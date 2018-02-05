@@ -14,5 +14,5 @@ export const APARTMENTS_DATA = 'https://raw.githubusercontent.com/simonzhow/Summ
 export const MAPBOX_GEO = {
   urlInit: 'https://api.mapbox.com/geocoding/v5/',
   mode: 'mapbox.places/',
-  type: '&types=neighborhood'
+  type: '&types=neighborhood&types=poi'
 }

@@ -46,7 +46,11 @@ export default class NoiseMap extends Component {
       y: null,
       lngLat: null,
       hoveredObject: null,
-      neighborhood: null
+      neighborhood: null,
+      locProperties: {
+        address: null,
+        category: null
+      }
     }
 
     this.handleResize = this.handleResize.bind(this)
@@ -78,7 +82,6 @@ export default class NoiseMap extends Component {
 
     /* TODO:
     3. hamburger menu for extra information?
-    4. add hovering functionality
     5. mobile friendly pls
     */
 
@@ -167,7 +170,15 @@ export default class NoiseMap extends Component {
   }
 
   renderTooltip() {
-    const {x, y, lngLat, hoveredObject, neighborhood} = this.state
+    const {
+      x,
+      y,
+      lngLat,
+      hoveredObject,
+      neighborhood,
+      locProperties,
+      showBarsOverlay
+    } = this.state
 
     if (!hoveredObject) {
       return null
@@ -192,8 +203,12 @@ export default class NoiseMap extends Component {
       .then(res => res.json())
       .then(
         (result) => {
+          // must ensure that we even have the data we want
           this.setState({
-            neighborhood: result.features[0].text
+            locProperties: (result.features[0]) && {
+              ...result.features[0].properties
+            },
+            neighborhood: (result.features[1]) && result.features[1].text
           })
         },
         (error) => {
@@ -204,9 +219,9 @@ export default class NoiseMap extends Component {
     return (
       <div style={{...tooltipStyle, left: x, top: y}}>
         <div>{`elevation: ${hoveredObject.elevationValue}`}</div>
-        <div>{`neighborhood: ${neighborhood}`}</div>
-        <div>{`longitude: ${lngLat[0]}`}</div>
-        <div>{`latitude: ${lngLat[1]}`}</div>
+        {neighborhood && <div>{`neighborhood: ${neighborhood}`}</div>}
+        {locProperties.address && <div>{`address: ${locProperties.address}`}</div>}
+        {showBarsOverlay && <div>{`type: ${locProperties.category}`}</div>}
       </div>
     )
   }

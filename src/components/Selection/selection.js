@@ -8,7 +8,7 @@ export default class Selection extends Component {
       <div className="overlay-map-control">
         <div className="title-label">Mode Selection</div>
         <div className="selection">
-          <input type="checkbox" onChange={this.props.toggleBars} checked={this.props.checkedBars}/> <span>Club/Bar Noise Complaints</span>
+          <input type="checkbox" onChange={this.props.toggleBars} checked={this.props.checkedBars}/> <span>Club/Bar/Restaurant Noise Complaints</span>
         </div>
         <div className="selection">
           <input type="checkbox" onChange={this.props.toggleApartments} checked={this.props.checkedApartments}/> <span>Apartment Noise Complaints</span>
