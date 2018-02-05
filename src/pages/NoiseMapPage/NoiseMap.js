@@ -8,7 +8,7 @@ import Selection from '../../components/Selection'
 import HomeButton from '../../components/Button'
 import ToggleSwitch from '../../components/ToggleSwitch'
 
-import { MAPBOX_TOKEN, BARS_DATA, APARTMENTS_DATA } from '../../constants'
+import { MAPBOX_TOKEN, BARS_DATA, APARTMENTS_DATA, MAPBOX_GEO } from '../../constants'
 import './NoiseMap.scss'
 
 const DEFAULT_VIEWPORT = {
@@ -38,7 +38,15 @@ export default class NoiseMap extends Component {
       },
       is3dMode: false,
       showBarsOverlay: false,
-      showApartmentsOverlay: false
+      showApartmentsOverlay: false,
+
+      // hover tooltip
+      hexagonColor: null,
+      x: null,
+      y: null,
+      lngLat: null,
+      hoveredObject: null,
+      neighborhood: null
     }
 
     this.handleResize = this.handleResize.bind(this)
@@ -48,6 +56,7 @@ export default class NoiseMap extends Component {
     this.changeDimensionMode = this.changeDimensionMode.bind(this)
     this.toggleBarsOverlay = this.toggleBarsOverlay.bind(this)
     this.toggleApartmentsOverlay = this.toggleApartmentsOverlay.bind(this)
+    this.renderTooltip = this.renderTooltip.bind(this)
 
     // load in bars data
     Papa.parse(BARS_DATA, {
@@ -68,7 +77,6 @@ export default class NoiseMap extends Component {
     })
 
     /* TODO:
-    1. CSS show/hide instead of re rendering overlays
     3. hamburger menu for extra information?
     4. add hovering functionality
     5. mobile friendly pls
@@ -154,6 +162,55 @@ export default class NoiseMap extends Component {
     this.setState({ is3dMode: !this.state.is3dMode })
   }
 
+  onHoverTooltip({color, x, y, lngLat, object}) {
+    this.setState({hexagonColor: color, x, y, lngLat: lngLat, hoveredObject: object})
+  }
+
+  renderTooltip() {
+    const {x, y, lngLat, hoveredObject, neighborhood} = this.state
+
+    if (!hoveredObject) {
+      return null
+    }
+
+    const tooltipStyle = {
+      position: 'absolute',
+      padding: '4px',
+      background: 'rgba(0, 0, 0, 0.8)',
+      color: '#fff',
+      maxWidth: '300px',
+      fontSize: '10px',
+      zIndex: 9,
+      pointerEvents: 'none'
+    }
+
+
+    // Make a call to Mapbox API for reverse GEO
+    const lonlat = lngLat[0].toString() + '%2C' + lngLat[1].toString() + '.json'
+    const url = MAPBOX_GEO.urlInit + MAPBOX_GEO.mode + lonlat + '?access_token=' + MAPBOX_TOKEN + MAPBOX_GEO.type
+    fetch(url)
+      .then(res => res.json())
+      .then(
+        (result) => {
+          this.setState({
+            neighborhood: result.features[0].text
+          })
+        },
+        (error) => {
+          console.log('ERROR: ', error)
+        }
+      )
+
+    return (
+      <div style={{...tooltipStyle, left: x, top: y}}>
+        <div>{`elevation: ${hoveredObject.elevationValue}`}</div>
+        <div>{`neighborhood: ${neighborhood}`}</div>
+        <div>{`longitude: ${lngLat[0]}`}</div>
+        <div>{`latitude: ${lngLat[1]}`}</div>
+      </div>
+    )
+  }
+
   renderMap() {
     const {
       viewport,
@@ -176,11 +233,11 @@ export default class NoiseMap extends Component {
         mapboxApiAccessToken={ MAPBOX_TOKEN }
       >
         <div className="bars-overlay" style={!showBarsOverlay ? inactiveStyle : {}}>
-          <BarsHexagonOverlay mode={is3dMode} viewport={ viewport } data={ bars.barsData || [] } />
+          <BarsHexagonOverlay hoverInfo={this.onHoverTooltip.bind(this)} mode={is3dMode} viewport={ viewport } data={ bars.barsData || [] } />
         </div>
 
         <div className="apartments-overlay" style={!showApartmentsOverlay ? inactiveStyle : {}}>
-          <ApartmentsHexagonOverlay mode={is3dMode} viewport={ viewport } data={ apartments.apartmentsData || [] } />
+          <ApartmentsHexagonOverlay hoverInfo={this.onHoverTooltip.bind(this)} mode={is3dMode} viewport={ viewport } data={ apartments.apartmentsData || [] } />
         </div>
       </MapGL>
     )
@@ -196,6 +253,7 @@ export default class NoiseMap extends Component {
 
     return (
       <div className="parties-map">
+        { this.renderTooltip() }
         { this.renderMap() }
         <div className="selection-container">
           <Selection checkedBars={showBarsOverlay} toggleBars={this.toggleBarsOverlay} checkedApartments={showApartmentsOverlay} toggleApartments={ this.toggleApartmentsOverlay }/>
