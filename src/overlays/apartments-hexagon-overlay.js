@@ -37,7 +37,9 @@ export default class ApartmentsHexagonOverlay extends Component {
       lightSettings: LIGHT_SETTINGS,
       colorDomain: [0, 50],
       data,
-      radius: 20
+      radius: 20,
+      pickable: true,
+      onHover: this.props.hoverInfo
     })
 
     return (<DeckGL {...viewport} layers={[layer]} />)
@@ -55,7 +57,9 @@ export default class ApartmentsHexagonOverlay extends Component {
       colorDomain: [0, 50],
       // colorRange,
       data,
-      radius: 20
+      radius: 20,
+      pickable: true,
+      onHover: this.props.hoverInfo
     })
 
     return (<DeckGL {...viewport} layers={[layer]} />)

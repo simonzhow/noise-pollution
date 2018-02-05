@@ -38,7 +38,7 @@ export default class BarsHexagonOverlay extends Component {
       data,
       radius: 40,
       pickable: true,
-      onHover: info => console.log('Hovered:', info)
+      onHover: this.props.hoverInfo
     })
 
     return (<DeckGL {...viewport} layers={[layer]} />)
@@ -55,7 +55,9 @@ export default class BarsHexagonOverlay extends Component {
       lightSettings: LIGHT_SETTINGS,
       // colorRange,
       data,
-      radius: 40
+      radius: 40,
+      pickable: true,
+      onHover: this.props.hoverInfo
     })
 
     return (
