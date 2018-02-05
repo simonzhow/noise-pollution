@@ -1,14 +1,14 @@
 import React, { Component } from 'react'
 import MapGL from 'react-map-gl'
+import 'mapbox-gl/dist/mapbox-gl.css'
+import Papa from 'papaparse'
 import BarsHexagonOverlay from '../../overlays/bars-hexagon-overlay.js'
 import ApartmentsHexagonOverlay from '../../overlays/apartments-hexagon-overlay.js'
 import Selection from '../../components/Selection'
 import HomeButton from '../../components/Button'
 import ToggleSwitch from '../../components/ToggleSwitch'
-import 'mapbox-gl/dist/mapbox-gl.css'
-import { MAPBOX_TOKEN, BARS_DATA, APARTMENTS_DATA } from '../../constants'
 
-import Papa from 'papaparse'
+import { MAPBOX_TOKEN, BARS_DATA, APARTMENTS_DATA } from '../../constants'
 import './NoiseMap.scss'
 
 const DEFAULT_VIEWPORT = {
@@ -117,8 +117,15 @@ export default class NoiseMap extends Component {
   }
 
   handleResize() {
+    this.onViewportChange({
+      width: window.innerWidth,
+      height: window.innerHeight
+    })
+  }
+
+  onViewportChange(viewport) {
     this.setState({
-      viewport: DEFAULT_VIEWPORT
+      viewport: {...this.state.viewport, ...viewport}
     })
   }
 
@@ -164,13 +171,14 @@ export default class NoiseMap extends Component {
     return (
       <MapGL
         {...viewport}
-        onViewportChange={(viewport) => this.setState({viewport})}
+        onViewportChange={this.onViewportChange.bind(this)}
         mapStyle='mapbox://styles/mapbox/dark-v9'
         mapboxApiAccessToken={ MAPBOX_TOKEN }
       >
         <div className="bars-overlay" style={!showBarsOverlay ? inactiveStyle : {}}>
           <BarsHexagonOverlay mode={is3dMode} viewport={ viewport } data={ bars.barsData || [] } />
         </div>
+
         <div className="apartments-overlay" style={!showApartmentsOverlay ? inactiveStyle : {}}>
           <ApartmentsHexagonOverlay mode={is3dMode} viewport={ viewport } data={ apartments.apartmentsData || [] } />
         </div>

@@ -36,7 +36,9 @@ export default class BarsHexagonOverlay extends Component {
       extruded: false,
       lightSettings: LIGHT_SETTINGS,
       data,
-      radius: 40
+      radius: 40,
+      pickable: true,
+      onHover: info => console.log('Hovered:', info)
     })
 
     return (<DeckGL {...viewport} layers={[layer]} />)
@@ -56,7 +58,11 @@ export default class BarsHexagonOverlay extends Component {
       radius: 40
     })
 
-    return (<DeckGL {...viewport} layers={[layer]} />)
+    return (
+      <DeckGL
+        {...viewport}
+        layers={[layer]}
+      />)
   }
 
 
