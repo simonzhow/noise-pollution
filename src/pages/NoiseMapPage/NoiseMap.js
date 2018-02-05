@@ -205,6 +205,7 @@ export default class NoiseMap extends Component {
         (result) => {
           // must ensure that we even have the data we want
           this.setState({
+            // theoretically, poi should always be returned because all (long, lat) maps to a poi
             locProperties: (result.features[0]) && {
               ...result.features[0].properties
             },
