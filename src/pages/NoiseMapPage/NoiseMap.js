@@ -5,7 +5,8 @@ import Papa from 'papaparse'
 import BarsHexagonOverlay from '../../overlays/bars-hexagon-overlay.js'
 import ApartmentsHexagonOverlay from '../../overlays/apartments-hexagon-overlay.js'
 import Selection from '../../components/Selection'
-import HomeButton from '../../components/Button'
+import Button from '../../components/Button'
+import SlideOutPanel from '../../components/SlideOutPanel'
 import ToggleSwitch from '../../components/ToggleSwitch'
 
 import { MAPBOX_TOKEN, BARS_DATA, APARTMENTS_DATA, MAPBOX_GEO } from '../../constants'
@@ -39,6 +40,7 @@ export default class NoiseMap extends Component {
       is3dMode: false,
       showBarsOverlay: false,
       showApartmentsOverlay: false,
+      showMenu: false,
 
       // hover tooltip
       hexagonColor: null,
@@ -56,7 +58,6 @@ export default class NoiseMap extends Component {
     this.handleResize = this.handleResize.bind(this)
     this.updateBars = this.updateBars.bind(this)
     this.updateApartments = this.updateApartments.bind(this)
-    this.homeButtonPressed = this.homeButtonPressed.bind(this)
     this.changeDimensionMode = this.changeDimensionMode.bind(this)
     this.toggleBarsOverlay = this.toggleBarsOverlay.bind(this)
     this.toggleApartmentsOverlay = this.toggleApartmentsOverlay.bind(this)
@@ -138,6 +139,10 @@ export default class NoiseMap extends Component {
     homeViewport.longitude = DEFAULT_VIEWPORT.longitude
     homeViewport.latitude = DEFAULT_VIEWPORT.latitude
     this.setState({ viewport: homeViewport })
+  }
+
+  menuPressed() {
+    this.setState({ showMenu: !this.state.showMenu })
   }
 
   toggleBarsOverlay() {
@@ -257,13 +262,25 @@ export default class NoiseMap extends Component {
     const {
       showBarsOverlay,
       showApartmentsOverlay,
-      is3dMode
+      is3dMode,
+      showMenu
     } = this.state
 
     return (
       <div className="parties-map">
         { this.renderTooltip() }
         { this.renderMap() }
+
+        <div className="menu-container">
+          <SlideOutPanel isOpen={showMenu}>
+            {/* temporary placeholder for now */}
+            <div className="menu">
+              Hello
+            </div>
+          </SlideOutPanel>
+        </div>
+
+
         <div className="selection-container">
           <Selection checkedBars={showBarsOverlay} toggleBars={this.toggleBarsOverlay} checkedApartments={showApartmentsOverlay} toggleApartments={ this.toggleApartmentsOverlay }/>
         </div>
@@ -273,7 +290,11 @@ export default class NoiseMap extends Component {
         </div>
 
         <div className="home-button-container">
-          <HomeButton home={this.homeButtonPressed}/>
+          <Button type={'fa fa-home fa-2x'} didClick={this.homeButtonPressed.bind(this)}/>
+        </div>
+
+        <div className="info-button-container">
+          <Button type={'fa fa-info-circle fa-2x'} didClick={this.menuPressed.bind(this)}/>
         </div>
       </div>
     )
