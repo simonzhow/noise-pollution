@@ -113,7 +113,7 @@ export default class NoiseMap extends Component {
 
   componentDidMount() {
     window.addEventListener('resize', this.handleResize)
-    this.handleResize() // this will ensure that viewport adjusts to right size when mounted onto the DOM
+    this.handleResize()
   }
 
   componentWillUnmount() {
@@ -224,7 +224,7 @@ export default class NoiseMap extends Component {
     )
   }
 
-  renderMap() {
+  renderMapAndOverlays() {
     const {
       viewport,
       bars,
@@ -269,7 +269,7 @@ export default class NoiseMap extends Component {
     return (
       <div className="parties-map">
         { this.renderTooltip() }
-        { this.renderMap() }
+        { this.renderMapAndOverlay() }
 
         <div className="menu-container">
           <SlideOutPanel isOpen={showMenu}>
@@ -280,7 +280,7 @@ export default class NoiseMap extends Component {
           </SlideOutPanel>
         </div>
 
-
+        {/* Renders selection box, toggle switch, and home/info buttons */}
         <div className="selection-container">
           <Selection checkedBars={showBarsOverlay} toggleBars={this.toggleBarsOverlay} checkedApartments={showApartmentsOverlay} toggleApartments={ this.toggleApartmentsOverlay }/>
         </div>
