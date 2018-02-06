@@ -28,6 +28,7 @@ export default class NoiseMap extends Component {
   constructor() {
     super()
     this.state = {
+      // overlays
       viewport: DEFAULT_VIEWPORT,
       bars: {
         barsData: null,
@@ -41,7 +42,6 @@ export default class NoiseMap extends Component {
       showApartmentsOverlay: false,
 
       // hover tooltip
-      hexagonColor: null,
       x: null,
       y: null,
       lngLat: null,
@@ -159,7 +159,7 @@ export default class NoiseMap extends Component {
   }
 
   onHoverTooltip({color, x, y, lngLat, object}) {
-    this.setState({hexagonColor: color, x, y, lngLat: lngLat, hoveredObject: object})
+    this.setState({ x, y, lngLat: lngLat, hoveredObject: object })
   }
 
   renderTooltip() {
