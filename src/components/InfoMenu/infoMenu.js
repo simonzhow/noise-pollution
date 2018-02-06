@@ -1,7 +1,10 @@
-import React, { Component } from 'react'
 import './infoMenu.scss'
 
 
-export default class InfoMenu extends Component {
-
+export default function InfoMenu() {
+  return (
+    <div className="info-menu">
+      Hello
+    </div>
+  )
 }

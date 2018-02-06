@@ -6,6 +6,7 @@ import BarsHexagonOverlay from '../../overlays/bars-hexagon-overlay.js'
 import ApartmentsHexagonOverlay from '../../overlays/apartments-hexagon-overlay.js'
 import Selection from '../../components/Selection'
 import Button from '../../components/Button'
+import InfoMenu from '../../components/InfoMenu'
 import SlideOutPanel from '../../components/SlideOutPanel'
 import ToggleSwitch from '../../components/ToggleSwitch'
 
@@ -271,16 +272,16 @@ export default class NoiseMap extends Component {
         { this.renderTooltip() }
         { this.renderMapAndOverlay() }
 
+
+
+
+        {/* Renders info menu, selection box, toggle switch, and home/info buttons */}
         <div className="menu-container">
           <SlideOutPanel isOpen={showMenu}>
-            {/* temporary placeholder for now */}
-            <div className="menu">
-              Hello
-            </div>
+            <InfoMenu />
           </SlideOutPanel>
         </div>
 
-        {/* Renders selection box, toggle switch, and home/info buttons */}
         <div className="selection-container">
           <Selection checkedBars={showBarsOverlay} toggleBars={this.toggleBarsOverlay} checkedApartments={showApartmentsOverlay} toggleApartments={ this.toggleApartmentsOverlay }/>
         </div>
