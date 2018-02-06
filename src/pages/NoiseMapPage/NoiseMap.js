@@ -79,13 +79,6 @@ export default class NoiseMap extends Component {
       dynamicTyping: true,
       complete: this.updateApartments
     })
-
-    /* TODO:
-    3. hamburger menu for extra information?
-    5. mobile friendly pls
-    */
-
-    // MUST RESET TOGGLE WHENEVER MODE IS SWITCHED
   }
 
   updateBars(results) {
@@ -203,7 +196,6 @@ export default class NoiseMap extends Component {
       .then(res => res.json())
       .then(
         (result) => {
-          // must ensure that we even have the data we want
           this.setState({
             // theoretically, poi should always be returned because all (long, lat) maps to a poi
             locProperties: (result.features[0]) && {
@@ -252,6 +244,7 @@ export default class NoiseMap extends Component {
           <BarsHexagonOverlay hoverInfo={this.onHoverTooltip.bind(this)} mode={is3dMode} viewport={ viewport } data={ bars.barsData || [] } />
         </div>
 
+        {/* still need to decide whether to have it conditionally render or css property change */}
         <div className="apartments-overlay" style={!showApartmentsOverlay ? inactiveStyle : {}}>
           <ApartmentsHexagonOverlay hoverInfo={this.onHoverTooltip.bind(this)} mode={is3dMode} viewport={ viewport } data={ apartments.apartmentsData || [] } />
         </div>
