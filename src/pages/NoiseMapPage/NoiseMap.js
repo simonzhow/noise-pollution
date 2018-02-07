@@ -10,7 +10,7 @@ import InfoMenu from '../../components/InfoMenu'
 import SlideOutPanel from '../../components/SlideOutPanel'
 import ToggleSwitch from '../../components/ToggleSwitch'
 
-import { MAPBOX_TOKEN, MAPBOX_STYLE, BARS_DATA, APARTMENTS_DATA, MAPBOX_GEO } from '../../constants'
+import { MAPBOX_TOKEN, MAPBOX_STYLE_MARKERS, MAPBOX_STYLE_NO_MARKERS, BARS_DATA, APARTMENTS_DATA, MAPBOX_GEO } from '../../constants'
 import './NoiseMap.scss'
 
 const DEFAULT_VIEWPORT = {
@@ -42,6 +42,7 @@ export default class NoiseMap extends Component {
       is3dMode: false,
       showBarsOverlay: false,
       showApartmentsOverlay: false,
+      showMarkers: false,
       showMenu: false,
 
       // hover tooltip
@@ -59,10 +60,6 @@ export default class NoiseMap extends Component {
     this.handleResize = this.handleResize.bind(this)
     this.updateBars = this.updateBars.bind(this)
     this.updateApartments = this.updateApartments.bind(this)
-    this.changeDimensionMode = this.changeDimensionMode.bind(this)
-    this.toggleBarsOverlay = this.toggleBarsOverlay.bind(this)
-    this.toggleApartmentsOverlay = this.toggleApartmentsOverlay.bind(this)
-    this.renderTooltip = this.renderTooltip.bind(this)
 
     // load in bars data
     Papa.parse(BARS_DATA, {
@@ -160,6 +157,12 @@ export default class NoiseMap extends Component {
     })
   }
 
+  toggleMapMarkers() {
+    this.setState({
+      showMarkers: !this.state.showMarkers
+    })
+  }
+
   changeDimensionMode() {
     this.setState({ is3dMode: !this.state.is3dMode })
   }
@@ -232,7 +235,8 @@ export default class NoiseMap extends Component {
       bars,
       showBarsOverlay,
       apartments,
-      showApartmentsOverlay
+      showApartmentsOverlay,
+      showMarkers
     } = this.state
 
     const inactiveStyle = {
@@ -243,7 +247,7 @@ export default class NoiseMap extends Component {
       <MapGL
         {...viewport}
         onViewportChange={this.onViewportChange.bind(this)}
-        mapStyle={ MAPBOX_STYLE }
+        mapStyle={ showMarkers ?  MAPBOX_STYLE_MARKERS : MAPBOX_STYLE_NO_MARKERS }
         mapboxApiAccessToken={ MAPBOX_TOKEN }
       >
         <div className="bars-overlay" style={!showBarsOverlay ? inactiveStyle : {}}>
@@ -269,7 +273,7 @@ export default class NoiseMap extends Component {
 
     return (
       <div className="parties-map">
-        { this.renderTooltip() }
+        { this.renderTooltip.bind(this) }
         { this.renderMapAndOverlays() }
 
 
@@ -281,19 +285,31 @@ export default class NoiseMap extends Component {
         </div>
 
         <div className="selection-container">
-          <Selection checkedBars={showBarsOverlay} toggleBars={this.toggleBarsOverlay} checkedApartments={showApartmentsOverlay} toggleApartments={ this.toggleApartmentsOverlay }/>
+          <Selection
+            toggleMarkers={this.toggleMapMarkers.bind(this)}
+            checkedBars={showBarsOverlay}
+            toggleBars={this.toggleBarsOverlay.bind(this)}
+            checkedApartments={showApartmentsOverlay}
+            toggleApartments={ this.toggleApartmentsOverlay.bind(this) }
+          />
         </div>
 
         <div className="toggle-switch-container">
-          { (showBarsOverlay || showApartmentsOverlay) && <ToggleSwitch mode={is3dMode} changeMode={this.changeDimensionMode}/> }
+          { (showBarsOverlay || showApartmentsOverlay) && <ToggleSwitch mode={is3dMode} changeMode={this.changeDimensionMode.bind(this)}/> }
         </div>
 
         <div className="home-button-container">
-          <Button type={'fa fa-home fa-2x'} didClick={this.homeButtonPressed.bind(this)}/>
+          <Button
+            type={'fa fa-home fa-2x'}
+            didClick={this.homeButtonPressed.bind(this)}
+          />
         </div>
 
         <div className="info-button-container">
-          <Button type={'fa fa-info-circle fa-2x'} didClick={this.toggleMenu.bind(this)}/>
+          <Button
+            type={'fa fa-info-circle fa-2x'}
+            didClick={this.toggleMenu.bind(this)}
+          />
         </div>
       </div>
     )

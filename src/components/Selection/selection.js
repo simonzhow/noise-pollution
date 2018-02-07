@@ -13,6 +13,9 @@ export default class Selection extends Component {
         <div className="selection">
           <input type="checkbox" onChange={this.props.toggleApartments} checked={this.props.checkedApartments}/> <span>Apartments</span>
         </div>
+        <div className="selection-optional">
+          <input type="checkbox" onChange={this.props.toggleMarkers} /> <span>Show Map Markers</span>
+        </div>
         <div className="notice">
           Shift + drag to rotate
         </div>
@@ -25,5 +28,6 @@ Selection.propTypes = {
   toggleBars: PropTypes.func,
   toggleApartments: PropTypes.func,
   checkedBars: PropTypes.bool,
-  checkedApartments: PropTypes.bool
+  checkedApartments: PropTypes.bool,
+  toggleMarkers: PropTypes.func
 }
