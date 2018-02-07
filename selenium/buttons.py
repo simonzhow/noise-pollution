@@ -1,3 +1,6 @@
+import sys
+sys.dont_write_bytecode = True
+
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 
