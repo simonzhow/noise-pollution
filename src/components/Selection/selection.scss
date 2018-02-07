@@ -2,9 +2,10 @@
 
 .overlay-map-control {
   font-family: $font-family;
-  color: $color-cream;
+
 
   .title-label {
+    color: $color-emerald;
     font-size: $font-size-medium;
     font-weight: $font-style-heading;
     margin-bottom: 20px;
@@ -12,11 +13,13 @@
 
   .selection {
     font-size: $font-size-small;
+    color: $color-cream;
   }
 
   .notice {
     margin-top: 20px;
     font-size: $font-size-tiny;
     font-style: italic;
+    color: $color-cream;
   }
 }

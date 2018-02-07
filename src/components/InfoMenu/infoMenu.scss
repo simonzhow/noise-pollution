@@ -1,0 +1,35 @@
+@import '../../scss/Variables';
+
+.info-menu {
+	position: absolute;
+	bottom: 0;
+	height: 100%;
+	width: 100%;
+	color: $color-cream;
+	background-color: $color-transparent;
+	text-align: center;
+	padding: 10px 60px 10px 60px;
+
+	.info-menu-title {
+		font-size: $font-size-large;
+		font-weight: $font-style-heading;
+		color: $color-emerald;
+		margin-bottom: 25px;
+	}
+
+	.info-menu-body {
+		font-size: $font-size-medium;
+		font-weight: $font-style-body;
+		margin-bottom: 15px;
+	}
+
+	.info-menu-footer {
+		font-size: $font-size-medium;
+		font-weight: $font-style-body;
+
+		.social-icons {
+			margin-top: 15px;
+		}
+	}
+
+}

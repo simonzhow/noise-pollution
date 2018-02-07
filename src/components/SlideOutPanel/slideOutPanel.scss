@@ -1,0 +1,45 @@
+@import '../../scss/Variables';
+
+.panel {
+  position: absolute;
+  bottom: 0;
+  height: 30%;
+  max-height: 225px;
+  width: 100%;
+  transition: transform .4s ease;
+  padding: 0;
+  z-index: $z-selection-container;
+}
+
+// .slideRight{
+//   transform: translate3d(-100vw,0,0);
+//   -webkit-transform: translate3d(-100vw,0,0);
+// }
+//
+// .slideRight.go {
+//   transform: translate3d(0,0,0);
+//   -webkit-transform: translate3d(0,0,0);
+// }
+//
+// .slideLeft{
+//   transform: translate3d(100vw,0,0);
+//   -webkit-transform: translate3d(100vw,0,0);
+// }
+//
+// .slideLeft.go {
+//   transform: translate3d(0,0,0);
+//   -webkit-transform: translate3d(0,0,0);
+// }
+
+.slideUp{
+  opacity: 0;
+  transition: transform .3s ease, opacity .3s;
+  transform: translate3d(0,100vh,0);
+  -webkit-transform: translate3d(0,100vh,0);
+}
+
+.slideUp.go {
+  opacity: 1;
+  transform: translate3d(0,0,0);
+  -webkit-transform: translate3d(0,0,0);
+}
