@@ -58,10 +58,10 @@
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
-    "test": "node scripts/test.js --env=jsdom",
+    "test": "jest",
     "selenium": "python selenium/main.py",
     "lint": "esw webpack.config.* src tools --color",
-    "lint:watch": "npm run lint -- --watch"
+    "lint:watch": "npm run lint -- --watch",
   },
   "jest": {
     "collectCoverageFrom": [
