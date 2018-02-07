@@ -20,4 +20,5 @@ Uses Mapbox, Deck.GL, and React.
 4. Once yarn install is complete, run `yarn start`
 5. A localhost window should open up automatically
 
+## Contact
 Reach out to me at simonjzhou@gmail.com if you have any questions.
