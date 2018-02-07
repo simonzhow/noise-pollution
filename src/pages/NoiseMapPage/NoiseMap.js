@@ -3,7 +3,7 @@ import MapGL from 'react-map-gl'
 import 'mapbox-gl/dist/mapbox-gl.css'
 import Papa from 'papaparse'
 import BarsHexagonOverlay from '../../overlays/bars-hexagon-overlay.js'
-// import ApartmentsHexagonOverlay from '../../overlays/apartments-hexagon-overlay.js'
+import ApartmentsHexagonOverlay from '../../overlays/apartments-hexagon-overlay.js'
 import Selection from '../../components/Selection'
 import Button from '../../components/Button'
 import InfoMenu from '../../components/InfoMenu'
@@ -164,7 +164,7 @@ export default class NoiseMap extends Component {
     this.setState({ is3dMode: !this.state.is3dMode })
   }
 
-  onHoverTooltip({color, x, y, lngLat, object}) {
+  onHoverTooltip({x, y, lngLat, object}) {
     this.setState({ x, y, lngLat: lngLat, hoveredObject: object })
   }
 
@@ -231,8 +231,8 @@ export default class NoiseMap extends Component {
       is3dMode,
       bars,
       showBarsOverlay,
-      // apartments,
-      // showApartmentsOverlay
+      apartments,
+      showApartmentsOverlay
     } = this.state
 
     const inactiveStyle = {
@@ -251,9 +251,9 @@ export default class NoiseMap extends Component {
         </div>
 
         {/* still need to decide whether to have it conditionally render or css property change */}
-        {/* <div className="apartments-overlay" style={!showApartmentsOverlay ? inactiveStyle : {}}>
+        <div className="apartments-overlay" style={!showApartmentsOverlay ? inactiveStyle : {}}>
           <ApartmentsHexagonOverlay hoverInfo={this.onHoverTooltip.bind(this)} mode={is3dMode} viewport={ viewport } data={ apartments.apartmentsData || [] } />
-        </div> */}
+        </div>
       </MapGL>
     )
   }
