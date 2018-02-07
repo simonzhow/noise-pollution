@@ -13,7 +13,7 @@ export default class ToggleSwitch extends Component {
     return (
       <div className="toggle-switch">
         <label className="switch">
-          <input checked={mode} onChange={changeMode} type="checkbox" />
+          <input className="selection-toggle" checked={mode} onChange={changeMode} type="checkbox" />
           <span className="slider" />
         </label>
       </div>

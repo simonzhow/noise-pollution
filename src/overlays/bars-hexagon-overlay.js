@@ -35,6 +35,7 @@ export default class BarsHexagonOverlay extends Component {
       id: 'bars-hexagon-layer',
       extruded: false,
       lightSettings: LIGHT_SETTINGS,
+      // colorRange,
       data,
       radius: 40,
       pickable: true,
