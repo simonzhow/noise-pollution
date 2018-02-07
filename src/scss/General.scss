@@ -18,6 +18,15 @@ html, body {
   font-family: $font-family;
 }
 
+a {
+  color: $color-emerald;
+  text-decoration: none;
+}
+
+a:hover {
+  color: $color-cream;
+}
+
 *, *:before, *:after {
   box-sizing: border-box;
 }

@@ -275,7 +275,7 @@ export default class NoiseMap extends Component {
 
         {/* Renders info menu, selection box, toggle switch, and home/info buttons */}
         <div className="menu-container">
-          <SlideOutPanel isOpen={showMenu} >
+          <SlideOutPanel isOpen={showMenu}>
             <InfoMenu />
           </SlideOutPanel>
         </div>

@@ -6,7 +6,7 @@ export default class Selection extends Component {
   render() {
     return (
       <div className="overlay-map-control">
-        <div className="title-label">Noise Complaints By Type</div>
+        <div className="title-label">Noise Complaints by Type</div>
         <div className="selection">
           <input type="checkbox" onChange={this.props.toggleBars} checked={this.props.checkedBars}/> <span>Club/Bar/Restaurant</span>
         </div>

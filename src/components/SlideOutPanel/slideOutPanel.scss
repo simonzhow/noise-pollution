@@ -3,7 +3,8 @@
 .panel {
   position: absolute;
   bottom: 0;
-  height: 20%;
+  height: 30%;
+  max-height: 225px;
   width: 100%;
   transition: transform .4s ease;
   padding: 0;
