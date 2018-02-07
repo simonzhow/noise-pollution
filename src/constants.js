@@ -17,4 +17,4 @@ export const MAPBOX_GEO = {
   type: '&types=neighborhood&types=poi'
 }
 
-export const INFO_DESCRIPTION = 'Noise pollution is one of the primary characteristics of both New York City and its bordering regions. That being said, this web application serves to provide a preliminary data visualization of noise complaints filed in 2016 taken from the NYPD.'
+export const INFO_DESCRIPTION = 'Noise pollution is one of the primary characteristics of both New York City and its bordering regions. That being said, this web application serves to provide a preliminary data visualization of noise complaints filed in 2016 with the NYPD.'
