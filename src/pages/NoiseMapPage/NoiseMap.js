@@ -10,7 +10,7 @@ import InfoMenu from '../../components/InfoMenu'
 import SlideOutPanel from '../../components/SlideOutPanel'
 import ToggleSwitch from '../../components/ToggleSwitch'
 
-import { MAPBOX_TOKEN, BARS_DATA, APARTMENTS_DATA, MAPBOX_GEO } from '../../constants'
+import { MAPBOX_TOKEN, MAPBOX_STYLE, BARS_DATA, APARTMENTS_DATA, MAPBOX_GEO } from '../../constants'
 import './NoiseMap.scss'
 
 const DEFAULT_VIEWPORT = {
@@ -243,7 +243,7 @@ export default class NoiseMap extends Component {
       <MapGL
         {...viewport}
         onViewportChange={this.onViewportChange.bind(this)}
-        mapStyle='mapbox://styles/mapbox/dark-v9'
+        mapStyle={ MAPBOX_STYLE }
         mapboxApiAccessToken={ MAPBOX_TOKEN }
       >
         <div className="bars-overlay" style={!showBarsOverlay ? inactiveStyle : {}}>
