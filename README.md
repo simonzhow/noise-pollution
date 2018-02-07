@@ -21,9 +21,13 @@ Uses Mapbox, Deck.GL, and React
 5. A localhost window should open up automatically
 
 ## Testing
-1. Ensure you are at the root
-2. Run `yarn selenium`
-3. This will execute a series of Chrome Selenium tests
+
+Ensure you have a `chromedriver` (downloadable online) and adjust path within test files
+
+1. Run `yarn start` at root
+2. In another terminal window, run `yarn selenium`
+3. Run `yarn selenium`
+4. This will execute a series of Chrome Selenium tests
 
 ## Contact
 Reach out to me at simonjzhou@gmail.com if you have any questions
