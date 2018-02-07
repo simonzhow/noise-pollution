@@ -61,7 +61,8 @@
     "test": "node scripts/test.js --env=jsdom",
     "selenium": "python selenium/main.py",
     "lint": "esw webpack.config.* src tools --color",
-    "lint:watch": "npm run lint -- --watch"
+    "lint:watch": "npm run lint -- --watch",
+    "postinstall": "npm update && npm install package-name"
   },
   "jest": {
     "collectCoverageFrom": [
