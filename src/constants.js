@@ -5,6 +5,7 @@ export const MapMode = {
 }
 
 // uses rawgit for online csv
+// TODO: make token private through env file
 export const MAPBOX_TOKEN = 'pk.eyJ1Ijoic2ltb256aG91IiwiYSI6ImNqZDVrNWhtZDR1ajEyeW5za202aTdzbnYifQ.eK4hOuvmBZoPcbXFIt_XoQ'
 export const MAPBOX_STYLE_MARKERS = 'mapbox://styles/mapbox/dark-v9'
 export const MAPBOX_STYLE_NO_MARKERS = 'mapbox://styles/simonzhou/cjdcipyl5cspe2smn6unrocjw'
