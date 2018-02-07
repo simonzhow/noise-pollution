@@ -14,7 +14,7 @@ export default class Selection extends Component {
           <input type="checkbox" onChange={this.props.toggleApartments} checked={this.props.checkedApartments}/> <span>Apartments</span>
         </div>
         <div className="selection-optional">
-          <input type="checkbox" onChange={this.props.toggleMarkers} /> <span>Show Map Markers</span>
+          <input type="checkbox" onChange={this.props.toggleMarkers} /> <span>Show Markers (map will reload)</span>
         </div>
         <div className="notice">
           Shift + drag to rotate

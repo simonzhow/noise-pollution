@@ -60,6 +60,7 @@ export default class NoiseMap extends Component {
     this.handleResize = this.handleResize.bind(this)
     this.updateBars = this.updateBars.bind(this)
     this.updateApartments = this.updateApartments.bind(this)
+    this.renderTooltip = this.renderTooltip.bind(this)
 
     // load in bars data
     Papa.parse(BARS_DATA, {
@@ -273,7 +274,7 @@ export default class NoiseMap extends Component {
 
     return (
       <div className="parties-map">
-        { this.renderTooltip.bind(this) }
+        { this.renderTooltip() }
         { this.renderMapAndOverlays() }
 
 
