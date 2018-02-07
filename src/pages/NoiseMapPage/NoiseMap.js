@@ -3,7 +3,7 @@ import MapGL from 'react-map-gl'
 import 'mapbox-gl/dist/mapbox-gl.css'
 import Papa from 'papaparse'
 import BarsHexagonOverlay from '../../overlays/bars-hexagon-overlay.js'
-import ApartmentsHexagonOverlay from '../../overlays/apartments-hexagon-overlay.js'
+// import ApartmentsHexagonOverlay from '../../overlays/apartments-hexagon-overlay.js'
 import Selection from '../../components/Selection'
 import Button from '../../components/Button'
 import InfoMenu from '../../components/InfoMenu'
@@ -142,7 +142,7 @@ export default class NoiseMap extends Component {
     this.setState({ viewport: homeViewport })
   }
 
-  menuPressed() {
+  toggleMenu() {
     this.setState({ showMenu: !this.state.showMenu })
   }
 
@@ -228,11 +228,11 @@ export default class NoiseMap extends Component {
   renderMapAndOverlays() {
     const {
       viewport,
-      bars,
-      apartments,
       is3dMode,
+      bars,
       showBarsOverlay,
-      showApartmentsOverlay
+      // apartments,
+      // showApartmentsOverlay
     } = this.state
 
     const inactiveStyle = {
@@ -251,9 +251,9 @@ export default class NoiseMap extends Component {
         </div>
 
         {/* still need to decide whether to have it conditionally render or css property change */}
-        <div className="apartments-overlay" style={!showApartmentsOverlay ? inactiveStyle : {}}>
+        {/* <div className="apartments-overlay" style={!showApartmentsOverlay ? inactiveStyle : {}}>
           <ApartmentsHexagonOverlay hoverInfo={this.onHoverTooltip.bind(this)} mode={is3dMode} viewport={ viewport } data={ apartments.apartmentsData || [] } />
-        </div>
+        </div> */}
       </MapGL>
     )
   }
@@ -270,14 +270,12 @@ export default class NoiseMap extends Component {
     return (
       <div className="parties-map">
         { this.renderTooltip() }
-        { this.renderMapAndOverlay() }
-
-
+        { this.renderMapAndOverlays() }
 
 
         {/* Renders info menu, selection box, toggle switch, and home/info buttons */}
         <div className="menu-container">
-          <SlideOutPanel isOpen={showMenu}>
+          <SlideOutPanel isOpen={showMenu} >
             <InfoMenu />
           </SlideOutPanel>
         </div>
@@ -295,7 +293,7 @@ export default class NoiseMap extends Component {
         </div>
 
         <div className="info-button-container">
-          <Button type={'fa fa-info-circle fa-2x'} didClick={this.menuPressed.bind(this)}/>
+          <Button type={'fa fa-info-circle fa-2x'} didClick={this.toggleMenu.bind(this)}/>
         </div>
       </div>
     )
