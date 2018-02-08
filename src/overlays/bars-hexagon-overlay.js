@@ -3,29 +3,23 @@ import React, { Component } from 'react'
 import DeckGL from 'deck.gl'
 import { HexagonLayer } from 'deck.gl'
 
-// play around with lights
+const COLOR_RANGE = [
+  [255,255,212],
+  [254,227,145],
+  [254,196,79],
+  [254,153,41],
+  [217,95,14],
+  [153,52,4]
+]
+
 const LIGHT_SETTINGS = {
-  lightsPosition: [-0.144528, 49.739968, 8000, -3.807751, 54.104682, 8000],
+  lightsPosition: [20.144528, 20.739968, 8000, -3.807751, 54.104682, 8000],
   ambientRatio: 0.7,
   diffuseRatio: 0.5,
   specularRatio: 0.2,
   lightsStrength: [0.8, 0.0, 0.8, 0.0],
   numberOfLights: 2
 }
-
-// play around with colors later
-// make manhattan more red
-
-// const colorRange = [
-//   [253,208,162],
-//   [253,208,162],
-//   [253,174,107],
-//   [166,54,3],
-//   [166,54,3],
-//   [166,54,3]
-// ]
-
-// const elevationScale = {min: 1, max: 50}
 
 export default class BarsHexagonOverlay extends Component {
   render2DModel() {
@@ -35,11 +29,11 @@ export default class BarsHexagonOverlay extends Component {
       id: 'bars-hexagon-layer',
       extruded: false,
       lightSettings: LIGHT_SETTINGS,
-      // colorRange,
+      colorRange: COLOR_RANGE,
       data,
       radius: 40,
       pickable: true,
-      onHover: this.props.hoverInfo
+      onHover: this.props.hoverInfo,
     })
 
     return (<DeckGL {...viewport} layers={[layer]} />)
@@ -54,7 +48,7 @@ export default class BarsHexagonOverlay extends Component {
       elevationScale: 1,
       extruded: true,
       lightSettings: LIGHT_SETTINGS,
-      // colorRange,
+      colorRange: COLOR_RANGE,
       data,
       radius: 40,
       pickable: true,

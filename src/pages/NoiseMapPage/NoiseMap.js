@@ -39,8 +39,8 @@ export default class NoiseMap extends Component {
       apartments: {
         apartmentsData: null
       },
-      is3dMode: false,
-      showBarsOverlay: false,
+      is3dMode: false, // change later
+      showBarsOverlay: false, // change later
       showApartmentsOverlay: false,
       showMarkers: false,
       showMenu: false,
@@ -134,10 +134,7 @@ export default class NoiseMap extends Component {
   }
 
   homeButtonPressed() {
-    const homeViewport = this.state.viewport
-    homeViewport.longitude = DEFAULT_VIEWPORT.longitude
-    homeViewport.latitude = DEFAULT_VIEWPORT.latitude
-    this.setState({ viewport: homeViewport })
+    this.setState({ viewport: DEFAULT_VIEWPORT })
   }
 
   toggleMenu() {
