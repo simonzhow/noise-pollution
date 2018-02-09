@@ -17,6 +17,9 @@ Uses Mapbox, Deck.GL, and React
 2. Install Yarn if not installed already (running `yarn version` on command line should return version >=0.23.4)
 
 ## Running the Application
+
+Must have working internet connection to use the application.
+
 1. Run `git clone [This Repository]` and cd into the folder
 3. In a new terminal window, run `yarn install`.
 4. Once yarn install is complete, run `yarn start`
