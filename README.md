@@ -1,4 +1,4 @@
-# Summer Internship Project - Simon
+# Noise Pollution
 
 ![Screenshot](data-viz-ny.png)
 
